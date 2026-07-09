@@ -1,0 +1,16 @@
+To change the BentaLab logo:
+
+1. Put the logo image file in this public folder.
+   Example: bentalab-logo.png
+
+2. Open brand-config.json.
+
+3. Set logoUrl to the file path.
+   Example:
+   "logoUrl": "/bentalab-logo.png"
+
+4. If you replace the image but keep the same filename, increase logoVersion.
+   Example:
+   "logoVersion": "2"
+
+5. Reload the website.
