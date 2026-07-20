@@ -19,7 +19,7 @@ const defaultBrandLogo = {
   logoVersion: '2',
 }
 
-const installerDownloadUrl = 'https://github.com/bentalabph/bentalab-website/releases/download/V1.0.0.Beta.10/BentaBoss-Installer.zip'
+const installerDownloadUrl = 'https://github.com/bentalabph/bentalab-website/releases/download/V1.0.0.BETA.13/BentaBoss-Installer.zip'
 const supportEmail = 'bentalabph@gmail.com'
 const supportPhone = 'PASTE_CONTACT_NUMBER_HERE'
 
