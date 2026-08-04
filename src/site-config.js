@@ -7,7 +7,7 @@ export const config = {
   version: 'V1.0.0',
   releaseDate: 'Official release',
   fileSize: 'Official installer',
-  downloadUrl: 'https://github.com/bentalabph/bentalab-website/releases/download/V1.0.0/BentaBoss-Installer.zip',
+  downloadUrl: 'https://github.com/bentalabph/bentalab-website/releases/download/v1.0.1/BentaBoss_1.0.1_Installer.zip',
   email: 'bentalabph@gmail.com',
   facebook: 'https://www.facebook.com/bentalabph',
   messenger: 'https://m.me/bentalabph',
