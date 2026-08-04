@@ -2,7 +2,7 @@
 export const config = {
   brand: 'BentaLab PH',
   company: 'BentaLab Business Solutions',
-  tagline: 'Smart business tools for growing MSMEs.',
+  tagline: 'Smart business tools for growing Printing & Crafting Businesses.',
   product: 'BentaBoss',
   version: 'V1.0.0',
   releaseDate: 'Official release',
