@@ -25,7 +25,7 @@ const updates = [
 
 const faqs = [
   ['What is BentaBoss?', 'BentaBoss is a Windows desktop application that brings POS, sales, inventory, customer balances, expenses, accounting records, and reports into one practical system.'],
-  ['Who is BentaBoss for?', 'It is designed for Filipino micro, small, and medium businesses, including retail stores, small shops, service businesses, printing businesses, and growing entrepreneurs.'],
+  ['Who is BentaBoss for?', 'It is designed for printing businesses and crafters who need a clearer way to manage sales, inventory, customer balances, expenses, and business records.'],
   ['Is BentaBoss free?', `BentaBoss has a ${config.pricing.activation} lifetime activation offer for one device.`],
   ['Is BentaBoss ready to use?', 'Yes. The official release is available for real business use, with ongoing improvements informed by customer feedback.'],
   ['Why does Windows show Unknown Publisher?', 'The installer is not yet code-signed with a paid publisher certificate. If you received it from an official BentaLab PH source, choose More info → Run anyway.'],
@@ -67,7 +67,7 @@ function App() {
     <main>
       <section className="hero section" id="home">
         <div className="hero-copy"><div className="eyebrow"><span className="live-dot" /> BentaBoss — official release now available</div>
-          <h1>Smart business tools for <em>growing Printing &  Crafting Businesses.</em></h1>
+          <h1>Smart business tools for <em>Printing Businesses &amp; Crafters.</em></h1>
           <p className="lead">Meet BentaBoss — an integrated POS and accounting solution designed to help businesses manage sales, inventory, customer balances, expenses, reports, and daily operations with more confidence and control.</p>
           <div className="hero-actions"><Button href={config.downloadUrl} external><Download size={17} /> Download BentaBoss</Button><Button href="#features" secondary>Explore features</Button></div>
           <p className="micro-note">Windows desktop application · {config.version} · Official release</p>
@@ -85,7 +85,7 @@ function App() {
 
       <section className="benefit-section"><div className="section benefit-grid"><div><div className="section-kicker">The everyday difference</div><h2>Spend less time guessing. Run your business with more confidence.</h2><p className="section-lead">Good business decisions start with organized information. BentaBoss helps bring the important pieces together.</p></div><div className="benefits">{[['01','Know your sales','Understand sales activity and transaction records.'],['02','Monitor your inventory','Keep better visibility over stock movement and activity.'],['03','Keep records organized','Bring sales, expenses, balances, and accounting records into one system.'],['04','Make better decisions','Use organized reports to better understand performance.']].map(([n,t,d]) => <div key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div></div></section>
 
-      <section className="section audiences" id="about"><div className="section-kicker">Made for MSMEs</div><div className="section-heading"><h2>Built for growing Filipino businesses.</h2><p>BentaBoss is designed with the realities of small and growing businesses in mind — including printing businesses that need better visibility over sales, customer balances, expenses, inventory, and records.</p></div><div className="audience-list">{['Retail stores','Small shops','Service businesses','Printing businesses','Growing entrepreneurs','Other small and medium businesses'].map((item, i) => <span key={item}><span>0{i+1}</span>{item}</span>)}</div></section>
+      <section className="section audiences" id="about"><div className="section-kicker">Made for your kind of work</div><div className="section-heading"><h2>Built for printing businesses and crafters.</h2><p>BentaBoss is designed for the practical realities of printing businesses and crafters — from tracking sales and materials to managing customer balances, expenses, inventory, and records.</p></div><div className="audience-list">{['Printing businesses','Crafters','Custom-order businesses','Small production teams','Creative entrepreneurs','Growing owner-led businesses'].map((item, i) => <span key={item}><span>0{i+1}</span>{item}</span>)}</div></section>
 
       <section className="release-section"><div className="section release-grid"><div><div className="release-badge">● OFFICIAL RELEASE</div><h2>Ready for your everyday business.</h2></div><div><p>BentaBoss is now officially released and available for real business use. It brings sales, inventory, customer balances, expenses, reports, and daily operations together in one practical desktop application.</p><p>The product will continue to receive improvements, fixes, and updates based on customer feedback and the needs of growing businesses.</p><p className="release-footnote">Download the official installer and get started with BentaBoss today.</p></div></div></section>
 
