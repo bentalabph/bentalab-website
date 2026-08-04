@@ -11,7 +11,7 @@ export const config = {
   email: 'bentalabph@gmail.com',
   facebook: 'https://www.facebook.com/bentalabph',
   messenger: 'https://m.me/bentalabph',
-  pricing: { activation: '₱749', additionalDevice: '₱379' },
+  pricing: { originalActivation: '₱2,500', activation: '₱749', additionalDevice: '₱379' },
   system: [
     ['Operating system', 'Windows 10 or later'],
     ['Processor', 'Modern Intel or AMD processor'],
