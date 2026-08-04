@@ -1,627 +1,113 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
-  AlertTriangle,
-  BarChart3,
-  Calculator,
-  CheckCircle2,
-  Download,
-  Eye,
-  KeyRound,
-  Mail,
-  MessageCircle,
-  Package,
-  ShieldCheck,
-  ShoppingCart,
+  ArrowRight, BarChart3, BookOpen, Check, ChevronDown, CircleHelp,
+  ClipboardList, Download, ExternalLink, FileSpreadsheet, Gauge, Menu, MessageCircle,
+  Package, ReceiptText, Search, ShieldCheck, ShoppingCart, Sparkles, Users, X,
 } from 'lucide-react'
+import { config } from './site-config'
 
-const defaultBrandLogo = {
-  logoUrl: '/BentaLab-Logo.png',
-  logoVersion: '2',
-}
-
-const installerDownloadUrl = 'https://github.com/bentalabph/bentalab-website/releases/download/V1.0.0.BETA.13/BentaBoss-Installer.zip'
-const supportEmail = 'bentalabph@gmail.com'
-const supportPhone = 'PASTE_CONTACT_NUMBER_HERE'
-
-const screenshots = [
-  { src: '/screenshots/dashboard.png', title: 'Dashboard Monitoring' },
-  { src: '/screenshots/pos.png', title: 'POS Sales Recording' },
-  { src: '/screenshots/inventory.png', title: 'Inventory Tracking' },
-  { src: '/screenshots/reports.png', title: 'Business Reports' },
+const features = [
+  [ShoppingCart, 'Point of Sale', 'Record sales efficiently and keep transactions organized.'],
+  [ClipboardList, 'Sales management', 'Monitor sales activity and maintain clear business records.'],
+  [Package, 'Inventory tracking', 'Keep track of inventory movement and stock activity.'],
+  [Users, 'Customer balances', 'Manage customer balances and keep payment records organized.'],
+  [ReceiptText, 'Expenses', 'Record business expenses and see costs more clearly.'],
+  [BookOpen, 'Accounting records', 'Maintain organized records connected to business transactions.'],
+  [BarChart3, 'Reports', 'Review useful business information for everyday decisions.'],
+  [ShieldCheck, 'Audit trail', 'Keep a record of important system activities and corrections.'],
+  [FileSpreadsheet, 'Data export', 'Export available information to PDF, Excel, and CSV when supported.'],
+  [Gauge, 'Business monitoring', 'Get a clearer view of operations in one desktop application.'],
 ]
 
-export default function App() {
-  const facebookUrl = 'https://www.facebook.com/bentalabph'
-  const messengerUrl = 'https://m.me/bentalabph'
-  const emailUrl = `mailto:${supportEmail}`
-  const hasSupportPhone =
-    typeof supportPhone === 'string' &&
-    supportPhone.trim() &&
-    supportPhone !== 'PASTE_CONTACT_NUMBER_HERE'
-  const [brandLogo, setBrandLogo] = useState(defaultBrandLogo)
+const updates = [
+  { version: 'V1.0.0 BETA.13', date: 'Current beta', newItems: ['BentaBoss beta installer available for Windows'], improved: ['Ongoing workflow and report improvements'], fixed: ['Bug fixes and stability improvements'], known: ['Features, layouts, and workflows may continue to change during beta'] },
+]
 
-  useEffect(() => {
-    let shouldUpdate = true
+const faqs = [
+  ['What is BentaBoss?', 'BentaBoss is a Windows desktop application that brings POS, sales, inventory, customer balances, expenses, accounting records, and reports into one practical system.'],
+  ['Who is BentaBoss for?', 'It is designed for Filipino micro, small, and medium businesses, including retail stores, small shops, service businesses, printing businesses, and growing entrepreneurs.'],
+  ['Is BentaBoss free?', `BentaBoss currently has a ${config.pricing.activation} lifetime activation offer for one device. The pre-release price may change after stable release.`],
+  ['Is BentaBoss still in Beta?', 'Yes. It is usable for real business testing, while some features, reports, layouts, and workflows continue to improve through feedback.'],
+  ['Why does Windows show Unknown Publisher?', 'The installer is not yet code-signed with a paid publisher certificate. If you received it from an official BentaLab PH source, choose More info → Run anyway.'],
+  ['How do I report a bug?', 'Use the feedback form below or email the BentaLab PH team with your BentaBoss version, what happened, and steps to reproduce the issue.'],
+]
 
-    fetch('/brand-config.json', { cache: 'no-store' })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Brand config not available')
-        }
-
-        return response.json()
-      })
-      .then((config) => {
-        if (!shouldUpdate) {
-          return
-        }
-
-        setBrandLogo({
-          logoUrl:
-            typeof config.logoUrl === 'string' && config.logoUrl.trim()
-              ? config.logoUrl.trim()
-              : defaultBrandLogo.logoUrl,
-          logoVersion:
-            typeof config.logoVersion === 'string' && config.logoVersion.trim()
-              ? config.logoVersion.trim()
-              : defaultBrandLogo.logoVersion,
-        })
-      })
-      .catch(() => {
-        if (shouldUpdate) {
-          setBrandLogo(defaultBrandLogo)
-        }
-      })
-
-    return () => {
-      shouldUpdate = false
-    }
-  }, [])
-
-  const problems = [
-    'Manual sales records are hard to review',
-    'Customer balances can be missed or forgotten',
-    'Inventory movement is difficult to monitor',
-    'Expenses are separated from sales reports',
-    'Profit is hard to understand without proper reports',
-    'Corrections are hard to trace without an audit trail',
-  ]
-
-  const solutionPoints = [
-    'Record sales and payments',
-    'Monitor products and stock movement',
-    'Track customer balances',
-    'Record expenses',
-    'View business reports',
-    'Keep safer correction and audit records',
-  ]
-
-  const features = [
-    {
-      icon: ShoppingCart,
-      title: 'POS Sales',
-      description:
-        'Record daily sales, payments, discounts, customer transactions, and printing service orders in one place.',
-    },
-    {
-      icon: Package,
-      title: 'Inventory Tracking',
-      description:
-        'Track products, raw materials, stock movement, and inventory adjustments for better monitoring.',
-    },
-    {
-      icon: Calculator,
-      title: 'Accounting Records',
-      description:
-        'Connect sales, payments, receivables, expenses, and journal entries to business reports.',
-    },
-    {
-      icon: BarChart3,
-      title: 'Reports & Monitoring',
-      description:
-        'View sales reports, profit and loss, customer balances, ledgers, inventory reports, and dashboard summaries.',
-    },
-  ]
-
-  const businessTypes = [
-    'Printing shops',
-    'Tarpaulin and signage businesses',
-    'Sticker and label printing',
-    'Sublimation businesses',
-    'Photocopy and document service shops',
-    'Small and home-based businesses',
-    'Other MSMEs that need POS, inventory, and accounting records',
-  ]
-
-  const pricingItems = [
-    'Single-device lifetime activation',
-    'Free future improvements and updates',
-    'Early access to BentaBoss pre-release',
-    'Support for setup and activation',
-    'Additional device activation: PHP 379 per device',
-  ]
-
-  const installSteps = [
-    'Click the download button.',
-    'Wait for the installer file to finish downloading.',
-    'Download and install BentaBoss on your Windows computer.',
-    'If Windows shows a warning, click More info -> Run anyway if you trust the official BentaLab PH source.',
-    'Open BentaBoss and enter your activation key.',
-  ]
-
-  const faqs = [
-    {
-      question: 'Is BentaBoss web-based?',
-      answer: 'No. BentaBoss is currently a local Windows desktop app.',
-    },
-    {
-      question: 'Is BentaBoss already official?',
-      answer:
-        'BentaBoss is currently in Beta / Pre-Release. It is already usable for real business testing, but improvements may still be made based on feedback.',
-    },
-    {
-      question: 'Can I try BentaBoss first?',
-      answer:
-        'Yes. You may download the installer directly from the website and try it on your Windows computer.',
-    },
-    {
-      question: 'How much is BentaBoss?',
-      answer:
-        'The current pre-release offer is PHP 749 lifetime activation for one device. Additional device activation may be offered for PHP 379 per device.',
-    },
-    {
-      question: 'Is it safe to install?',
-      answer:
-        'BentaBoss should only be downloaded from official BentaLab PH sources. Windows may show an "Unknown Publisher" warning because the app is not yet code-signed with a paid publisher certificate. This does not automatically mean unsafe, but users should only continue if they trust the official source.',
-    },
-    {
-      question: 'How many devices are included?',
-      answer:
-        'The PHP 749 activation is for one device. Additional devices may be activated separately if available.',
-    },
-    {
-      question: 'What happens if I reformat my computer?',
-      answer:
-        'Since BentaBoss is installed locally, reformatting may remove local app data if no backup was made. Users should create and keep backups before reformatting or changing computers.',
-    },
-    {
-      question: 'Is BentaBoss only for printing businesses?',
-      answer:
-        'BentaBoss is especially focused on printing businesses, but it can also help other small businesses that need POS, inventory, customer balance tracking, expenses, and reports.',
-    },
-  ]
-
-  return (
-    <main className="page">
-      <nav className="nav">
-        <div className="logo">
-          <div className="logo-icon">
-            <BentaLabLogo logo={brandLogo} />
-          </div>
-          <div>
-            <span className="logo-text">BentaLab PH</span>
-            <span className="logo-sub">Business tools made smarter</span>
-          </div>
-        </div>
-
-        <div className="nav-links" aria-label="Primary navigation">
-          <a href="#features">Features</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
-          <a href="#support">Support</a>
-        </div>
-
-        <div className="nav-actions">
-          <a
-            href={facebookUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-link"
-            aria-label="Open BentaLab PH on Facebook"
-          >
-            <FacebookIcon />
-          </a>
-
-          <a href={installerDownloadUrl} download className="nav-cta">
-            Download
-          </a>
-        </div>
-      </nav>
-
-      <section className="hero">
-        <div>
-          <div className="badge">
-            <span className="badge-dot" />
-            Beta / Pre-Release for selected early users
-          </div>
-
-          <h1 className="hero-title">
-            Run your business with better sales, inventory, and accounting control.
-            <br />
-            <span>BentaBoss POS &amp; Accounting</span>
-          </h1>
-
-          <p className="hero-desc">
-            BentaBoss is an Integrated POS &amp; Accounting System made for Philippine
-            Micro and Small Businesses, especially printing businesses that need a more organized way to
-            record sales, monitor inventory, track customer balances, manage expenses,
-            and view reports in one system.
-          </p>
-
-          <div className="hero-btns">
-            <a href={installerDownloadUrl} download className="btn-primary">
-              <Download aria-hidden="true" size={17} />
-              Download BentaBoss
-            </a>
-            <a href="#pricing" className="btn-secondary">
-              <Eye aria-hidden="true" size={17} />
-              View pricing
-            </a>
-          </div>
-
-          <p className="hero-note">
-            The installer is hosted on this website for direct download.
-          </p>
-        </div>
-
-        <div className="app-preview" aria-label="BentaBoss dashboard preview">
-          <div className="app-bar">
-            <div className="dots" aria-hidden="true">
-              <span className="dot dot-r" />
-              <span className="dot dot-y" />
-              <span className="dot dot-g" />
-            </div>
-            <span className="app-title">Dashboard - Business Summary</span>
-          </div>
-          <div className="app-body">
-            <div className="dash-header">BentaBoss Monitoring</div>
-            <div className="dash-title">Daily Business Control</div>
-            <div className="metrics">
-              <Metric label="Sales" value="PHP 48.2K" width="72%" />
-              <Metric label="Inventory" value="1,204" width="55%" />
-              <Metric label="Receivables" value="PHP 12.7K" width="40%" />
-              <Metric label="Profit & Loss" value="+PHP 6.5K" width="60%" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="content-section">
-        <div className="section-label">Common Business Problems</div>
-        <h2 className="section-title">Still tracking your business manually?</h2>
-        <p className="section-desc">
-          Many small businesses still rely on notebooks, Excel files, or scattered
-          records. This can make it harder to monitor sales, balances, inventory,
-          expenses, and profit.
-        </p>
-
-        <div className="cards-grid cards-grid-3">
-          {problems.map((problem) => (
-            <article className="compact-card" key={problem}>
-              <AlertTriangle aria-hidden="true" size={18} />
-              <h3>{problem}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="split-section">
-        <div>
-          <div className="section-label">The BentaBoss Solution</div>
-          <h2 className="section-title">One local system for daily business monitoring</h2>
-          <p className="section-desc no-margin">
-            BentaBoss connects POS sales, basic inventory tracking, customer balances,
-            expenses, reports, and accounting records in one desktop system, helping
-            business owners monitor operations with more confidence and control.
-          </p>
-        </div>
-
-        <div className="check-grid">
-          {solutionPoints.map((point) => (
-            <div className="check-item" key={point}>
-              <CheckCircle2 aria-hidden="true" size={18} />
-              <span>{point}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="features-section" id="features">
-        <div className="section-label">Features</div>
-        <h2 className="section-title">Made for daily business operations</h2>
-        <p className="section-desc">
-          BentaBoss helps small businesses manage common workflows without switching
-          between separate POS, spreadsheet, and accounting tools.
-        </p>
-
-        <div className="features-grid">
-          {features.map((feature) => {
-            const Icon = feature.icon
-
-            return (
-              <article className="feature-card" key={feature.title}>
-                <div className="feat-icon">
-                  <Icon aria-hidden="true" size={19} />
-                </div>
-                <h3 className="feat-title">{feature.title}</h3>
-                <p className="feat-desc">{feature.description}</p>
-              </article>
-            )
-          })}
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="content-section">
-        <div className="section-label">Built For</div>
-        <h2 className="section-title">Made for growing Philippine Micro and Small Businesses</h2>
-        <p className="section-desc">
-          BentaBoss is designed for small and growing businesses that need practical
-          tools, not complicated enterprise software.
-        </p>
-
-        <div className="cards-grid business-grid">
-          {businessTypes.map((business) => (
-            <article className="business-card" key={business}>
-              <ShieldCheck aria-hidden="true" size={18} />
-              <span>{business}</span>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="content-section">
-        <div className="section-label">Product Preview</div>
-        <h2 className="section-title">See how BentaBoss helps organize daily operations</h2>
-        <p className="section-desc">
-          Use real BentaBoss screenshots to show the system honestly and clearly.
-        </p>
-
-        <div className="screenshots-grid">
-          {screenshots.map((screenshot) => (
-            <article className="screenshot-card" key={screenshot.src}>
-              <div className="screenshot-frame">
-                <img
-                  src={screenshot.src}
-                  alt={`${screenshot.title} screenshot`}
-                  loading="lazy"
-                  onError={(event) => {
-                    event.currentTarget.classList.add('is-missing')
-                  }}
-                />
-                <span className="screenshot-fallback">Screenshot coming soon</span>
-              </div>
-              <h3>{screenshot.title}</h3>
-            </article>
-          ))}
-        </div>
-        <p className="privacy-note">
-          Do not show sensitive client/customer data in screenshots. Use demo data or
-          blurred/clean screenshots only.
-        </p>
-      </section>
-
-      <div className="divider" />
-
-      <section className="pricing-section" id="pricing">
-        <div>
-          <div className="section-label">Pre-Release Offer</div>
-          <h2 className="section-title">Affordable lifetime access for early users</h2>
-          <p className="section-desc no-margin">
-            BentaBoss is currently in Beta / Pre-Release. This means the app is already
-            usable for real business testing, but some features, reports, layouts, and
-            workflows may still be improved based on user feedback.
-          </p>
-          <p className="trust-note">
-            BentaBoss has been tested with real business workflows and large-volume
-            transaction testing during pre-release development.
-          </p>
-        </div>
-
-        <div className="pricing-card">
-          <div className="pricing-head">
-            <div>
-              <p className="pricing-label">Lifetime activation for one device</p>
-              <h3 className="price">PHP 749</h3>
-              <p className="pricing-note">Lifetime activation for one device</p>
-            </div>
-            <div className="price-mark">PHP</div>
-          </div>
-
-          <div className="pricing-list">
-            {pricingItems.map((item) => (
-              <div className="pricing-item" key={item}>
-                <CheckCircle2 aria-hidden="true" size={18} />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-
-          <p className="pricing-footnote">
-            Pre-release pricing may change after the official stable release.
-          </p>
-
-          <a href={installerDownloadUrl} download className="dl-btn pricing-cta">
-            <Download aria-hidden="true" size={18} />
-            Download BentaBoss
-          </a>
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="download-section" id="download">
-        <div>
-          <div className="section-label">Official Download</div>
-          <h2 className="section-title">How to download and install BentaBoss</h2>
-          <p className="section-desc no-margin">
-            The installer is hosted on this website. Click the download button below to
-            get the latest installer file.
-          </p>
-
-          <div className="steps-list install-list">
-            {installSteps.map((step, index) => (
-              <div className="step-card" key={step}>
-                <div className="step-number">{index + 1}</div>
-                <p>{step}</p>
-              </div>
-            ))}
-          </div>
-
-          <a href={installerDownloadUrl} download className="dl-btn">
-            <Download aria-hidden="true" size={18} />
-            Download BentaBoss
-          </a>
-        </div>
-
-        <aside className="notice-card">
-          <div className="notice-header">
-            <div className="notice-icon">
-              <AlertTriangle aria-hidden="true" size={17} />
-            </div>
-            <div className="notice-title">Windows security warning</div>
-          </div>
-          <div className="notice-body">
-            <p>
-              Windows may show "Windows protected your PC" or "Unknown Publisher"
-              because BentaBoss is not yet code-signed with a paid software publisher
-              certificate.
-            </p>
-            <p>
-              This does not automatically mean the app is unsafe. It only means Windows
-              cannot yet verify the publisher identity. Please download only from
-              official BentaLab PH sources.
-            </p>
-          </div>
-        </aside>
-      </section>
-
-      <div className="divider" />
-
-      <section className="content-section" id="faq">
-        <div className="section-label">FAQ</div>
-        <h2 className="section-title">Common questions before downloading</h2>
-
-        <div className="faq-list">
-          {faqs.map((faq) => (
-            <article className="faq-item" key={faq.question}>
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      <section className="support-section" id="support">
-        <div className="support-card">
-          <div className="section-label">Support</div>
-          <h2 className="section-title">Need help?</h2>
-          <p className="section-desc no-margin">
-            For download, installation, activation, setup, or pre-release questions,
-            message BentaLab PH. We can guide you before and after installation.
-          </p>
-          <div className="support-actions">
-            <a href={messengerUrl} target="_blank" rel="noopener noreferrer" className="support-btn">
-              <MessageCircle aria-hidden="true" size={18} />
-              Message BentaLab PH
-            </a>
-            <a href={emailUrl} className="support-email">
-              <Mail aria-hidden="true" size={18} />
-              {supportEmail}
-            </a>
-            {hasSupportPhone && <span className="support-phone">{supportPhone}</span>}
-          </div>
-        </div>
-
-        <aside className="activation-card">
-          <div className="activation-icon">
-            <KeyRound aria-hidden="true" size={18} />
-          </div>
-          <h3>Activation Reminder</h3>
-          <p>
-            Keep your activation key safe. One activation is valid for one device unless
-            additional device activation is purchased.
-          </p>
-        </aside>
-      </section>
-
-      <section className="final-cta">
-        <div>
-          <div className="section-label">Get Started</div>
-          <h2 className="section-title">Ready to organize your business with BentaBoss?</h2>
-          <p className="section-desc no-margin">
-            Download the installer directly from the website and start setup on your
-            Windows computer.
-          </p>
-        </div>
-        <a href={installerDownloadUrl} download className="btn-primary">
-          <Download aria-hidden="true" size={17} />
-          Download BentaBoss
-        </a>
-      </section>
-
-      <footer className="footer">
-        <div className="footer-brand">
-          <BentaLabLogo logo={brandLogo} />
-          <p>Copyright 2026 BentaLab Business Solutions. All rights reserved.</p>
-        </div>
-        <div className="footer-links">
-          <a
-            href={facebookUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-social"
-          >
-            <FacebookIcon />
-            Facebook
-          </a>
-          <a href={emailUrl} className="footer-social">
-            <Mail aria-hidden="true" size={17} />
-            {supportEmail}
-          </a>
-        </div>
-      </footer>
-    </main>
-  )
+function Logo({ compact = false }) {
+  return <a className={`brand ${compact ? 'brand-compact' : ''}`} href="#home" aria-label="BentaLab PH home">
+    <img src="/BentaLab-Logo.png" alt="BentaLab PH" />
+    <span><strong>BentaLab PH</strong><small>Business Solutions</small></span>
+  </a>
 }
 
-function BentaLabLogo({ logo }) {
-  const versionSeparator = logo.logoUrl.includes('?') ? '&' : '?'
-  const logoSrc = `${logo.logoUrl}${versionSeparator}v=${encodeURIComponent(logo.logoVersion)}`
-
-  return <img className="bentalab-logo" src={logoSrc} alt="BentaLab logo" />
+function Button({ href, children, secondary = false, external = false }) {
+  return <a className={`button ${secondary ? 'button-secondary' : ''}`} href={href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+    {children} {external ? <ExternalLink size={15} /> : <ArrowRight size={16} />}
+  </a>
 }
 
-function FacebookIcon() {
-  return (
-    <svg className="facebook-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M14.2 8.2V6.9c0-.7.5-.9 1-.9h1.8V3.2c-.9-.1-1.7-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v1.9H7.5v3.2h2.8V21h3.5v-8.6h2.7l.5-3.2h-3Z"
-      />
-    </svg>
-  )
-}
+function App() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [openFaq, setOpenFaq] = useState(0)
+  const filteredFaqs = useMemo(() => faqs.filter(([q, a]) => `${q} ${a}`.toLowerCase().includes(search.toLowerCase())), [search])
+  const closeMenu = () => setMobileOpen(false)
 
-function Metric({ label, value, width }) {
-  return (
-    <div className="metric">
-      <div className="metric-label">{label}</div>
-      <div className="metric-value">{value}</div>
-      <div className="metric-bar">
-        <div className="metric-fill" style={{ width }} />
+  return <div className="site-shell">
+    <header className="site-header">
+      <div className="header-inner">
+        <Logo />
+        <nav className={mobileOpen ? 'nav-links is-open' : 'nav-links'} aria-label="Primary navigation">
+          {['home', 'bentaboss', 'features', 'pricing', 'updates', 'support', 'about'].map((id) => <a key={id} href={`#${id}`} onClick={closeMenu}>{id === 'bentaboss' ? 'BentaBoss' : id === 'about' ? 'About BentaLab' : id[0].toUpperCase() + id.slice(1)}</a>)}
+        </nav>
+        <div className="header-actions"><a className="text-link" href={`mailto:${config.email}`}>Get Started</a><Button href={config.downloadUrl} external>Download BentaBoss</Button></div>
+        <button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button>
       </div>
-    </div>
-  )
+    </header>
+
+    <main>
+      <section className="hero section" id="home">
+        <div className="hero-copy"><div className="eyebrow"><span className="live-dot" /> BentaBoss Beta — now available for real business testing</div>
+          <h1>Smart business tools for <em>growing MSMEs.</em></h1>
+          <p className="lead">Meet BentaBoss — an integrated POS and accounting solution designed to help businesses manage sales, inventory, customer balances, expenses, reports, and daily operations with more confidence and control.</p>
+          <div className="hero-actions"><Button href={config.downloadUrl} external><Download size={17} /> Download BentaBoss</Button><Button href="#features" secondary>Explore features</Button></div>
+          <p className="micro-note">Windows desktop application · {config.version} · Beta / Pre-Release</p>
+        </div>
+        <div className="hero-visual"><div className="visual-glow" /><div className="product-window"><div className="window-top"><span className="window-dots"><i /><i /><i /></span><span>BentaBoss · Business overview</span><span className="window-status">● Live data</span></div><div className="window-body"><div className="window-sidebar"><b>BB</b><span className="active">▦</span><span>▣</span><span>◫</span><span>≋</span><span>⚙</span></div><div className="window-content"><div className="window-heading"><div><small>MONITORING</small><h3>Business overview</h3></div><span className="date-chip">Today ▾</span></div><div className="metric-row"><div><small>Total sales</small><strong>₱48,240</strong><span className="positive">↑ 12.8%</span></div><div><small>Receivables</small><strong>₱12,700</strong><span className="neutral">8 customers</span></div><div><small>Inventory items</small><strong>1,204</strong><span className="positive">↑ 4.2%</span></div></div><div className="chart-card"><div className="chart-label"><span>Sales activity</span><small>Last 7 days</small></div><div className="chart"><span style={{height:'38%'}} /><span style={{height:'52%'}} /><span style={{height:'44%'}} /><span style={{height:'68%'}} /><span style={{height:'56%'}} /><span style={{height:'82%'}} /><span style={{height:'74%'}} /></div></div></div></div></div><div className="floating-note"><Sparkles size={15} /><span><strong>One clear view</strong><small>for your daily operations</small></span></div></div>
+      </section>
+
+      <section className="trust-strip"><div><strong>Built for the way Filipino MSMEs work</strong><span>Practical tools for everyday business decisions.</span></div><div className="trust-items"><span><Check /> Real-world workflows</span><span><Check /> Easy to understand</span><span><Check /> Continuously improved</span></div></section>
+
+      <section className="intro section" id="bentaboss"><div className="section-kicker">The BentaLab approach</div><div className="intro-grid"><div><h2>Business technology built for growing businesses.</h2></div><div><p className="section-lead">BentaLab Business Solutions creates smart, practical, and easy-to-use business tools that help MSMEs manage sales, inventory, accounting, reports, and daily operations with more confidence and control.</p><div className="pillars"><div><span>01</span><h3>Practical</h3><p>Built around real business needs and everyday workflows.</p></div><div><span>02</span><h3>Simple</h3><p>Designed to make business management easier to understand and use.</p></div><div><span>03</span><h3>Built to improve</h3><p>Continuously improved through feedback and practical experience.</p></div></div></div></div></section>
+
+      <section className="product-band"><div className="section product-grid"><div className="product-mark"><div className="product-icon">BB</div><span>THE FIRST BENTALAB PRODUCT</span><h2>BentaBoss<br /><em>Integrated POS &amp; Accounting</em></h2><p>BentaBoss brings essential sales, inventory, accounting, and reporting tools together in one practical desktop application.</p><Button href="#features" secondary>Explore BentaBoss</Button></div><div className="product-points">{[['01','POS and sales recording'],['02','Inventory and stock activity'],['03','Customer balances and expenses'],['04','Accounting records and reports'],['05','Audit trail and data management'],['06','PDF / Excel / CSV exports']].map(([n,t]) => <div key={n}><span>{n}</span><strong>{t}</strong></div>)}</div></div></section>
+
+      <section className="section feature-section" id="features"><div className="section-kicker">What BentaBoss helps with</div><div className="section-heading"><h2>Everything you need to keep the day moving.</h2><p>Simple building blocks for the sales, records, and decisions that matter most.</p></div><div className="feature-grid">{features.map(([Icon,title,description]) => <article className="feature-card" key={title}><div className="icon-box"><Icon size={19} /></div><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+
+      <section className="benefit-section"><div className="section benefit-grid"><div><div className="section-kicker">The everyday difference</div><h2>Spend less time guessing. Run your business with more confidence.</h2><p className="section-lead">Good business decisions start with organized information. BentaBoss helps bring the important pieces together.</p></div><div className="benefits">{[['01','Know your sales','Understand sales activity and transaction records.'],['02','Monitor your inventory','Keep better visibility over stock movement and activity.'],['03','Keep records organized','Bring sales, expenses, balances, and accounting records into one system.'],['04','Make better decisions','Use organized reports to better understand performance.']].map(([n,t,d]) => <div key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div></div></section>
+
+      <section className="section audiences" id="about"><div className="section-kicker">Made for MSMEs</div><div className="section-heading"><h2>Built for growing Filipino businesses.</h2><p>BentaBoss is designed with the realities of small and growing businesses in mind — including printing businesses that need better visibility over sales, customer balances, expenses, inventory, and records.</p></div><div className="audience-list">{['Retail stores','Small shops','Service businesses','Printing businesses','Growing entrepreneurs','Other small and medium businesses'].map((item, i) => <span key={item}><span>0{i+1}</span>{item}</span>)}</div></section>
+
+      <section className="beta-section"><div className="section beta-grid"><div><div className="beta-badge">● BETA / PRE-RELEASE</div><h2>Honest about where BentaBoss is today.</h2></div><div><p>BentaBoss is currently in Beta / Pre-Release. The application is already usable for real business testing, but some features, reports, layouts, and workflows may continue to improve based on user feedback.</p><p>As an early user, you may experience occasional bugs, adjustments, or updates while the system continues to improve before the official stable release.</p><p className="beta-footnote">By using the Beta version, you understand that BentaBoss is still under active development and may receive future changes, fixes, and improvements.</p></div></div></section>
+
+      <section className="section pricing-section" id="pricing"><div className="section-kicker">Pre-release offer</div><div className="pricing-grid"><div><h2>Start with a clear, fair price.</h2><p className="section-lead">The current lower price is offered because BentaBoss is still in Beta / Pre-Release.</p><a className="email-link" href={`mailto:${config.email}`}>Questions about activation? <ArrowRight size={15} /></a></div><div className="price-card"><span className="price-label">BentaBoss Beta Activation</span><div className="price">{config.pricing.activation}<small> / device</small></div><p>Lifetime activation for one device.</p><hr />{['One-device activation','Lifetime access to the activated version','Lifetime free updates for future improvements, subject to the licensing policy'].map((item) => <div className="price-item" key={item}><Check size={16} />{item}</div>)}<div className="additional"><strong>{config.pricing.additionalDevice}</strong> per additional device, if offered.</div><Button href={`mailto:${config.email}?subject=BentaBoss%20activation`}>Get BentaBoss</Button></div></div></section>
+
+      <section className="download-band" id="download"><div className="section download-grid"><div><div className="section-kicker">Official download</div><h2>Ready to bring more order to your day?</h2><p>Download the current BentaBoss beta installer for Windows from the official BentaLab PH source.</p><Button href={config.downloadUrl} external><Download size={17} /> Download for Windows</Button></div><div className="download-meta"><div><span>Current version</span><strong>{config.version}</strong></div><div><span>Release status</span><strong>{config.releaseDate}</strong></div><div><span>Compatibility</span><strong>Windows 10 or later</strong></div><div><span>File source</span><strong>Official GitHub release <ExternalLink size={14} /></strong></div></div></div></section>
+
+      <section className="section guide-section" id="support"><div className="guide-grid"><div><div className="section-kicker">Get set up</div><h2>From download to first use in three steps.</h2><p className="section-lead">Need help installing? <a href={`mailto:${config.email}`}>Contact the BentaLab PH team.</a></p></div><div className="steps">{['Download the official BentaBoss installer.','Run the installer and follow the installation instructions.','Open BentaBoss and complete activation or setup.'].map((step,i) => <div key={step}><span>0{i+1}</span><strong>{step}</strong></div>)}</div></div><div className="warning"><div><CircleHelp size={18} /><strong>Important notice about the Windows security warning</strong></div><p>BentaBoss may show “Windows protected your PC” or “Unknown Publisher” because the app is not yet code-signed with a paid software publisher certificate.</p><p>If you trust the official source, you may continue with <strong>More info → Run anyway</strong>. Download or receive the installer only from official BentaLab PH / BentaBoss sources.</p></div></section>
+
+      <section className="section requirements"><div className="section-kicker">System requirements</div><div className="req-grid"><div><h2>A dependable start for everyday work.</h2><p className="section-lead">These are the current recommended starting points and are kept here in one place so they can be updated easily as BentaBoss evolves.</p></div><div className="req-list">{config.system.map(([label,value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div></div></section>
+
+      <section className="updates-section" id="updates"><div className="section updates-grid"><div><div className="section-kicker">What's new</div><h2>Progress you can follow.</h2><p className="section-lead">BentaBoss is improved through real-world feedback. Check back here for the latest release notes.</p></div><div className="update-card">{updates.map((u) => <div key={u.version}><div className="update-top"><span>{u.version}</span><small>{u.date}</small></div><div className="update-columns"><div><b>New</b>{u.newItems.map(x=><p key={x}>+ {x}</p>)}</div><div><b>Improved</b>{u.improved.map(x=><p key={x}>↗ {x}</p>)}</div><div><b>Fixed</b>{u.fixed.map(x=><p key={x}>✓ {x}</p>)}</div></div><div className="known"><b>Known issues</b><p>{u.known.join(' · ')}</p></div></div>)}</div></div></section>
+
+      <section className="section faq-section"><div className="faq-heading"><div><div className="section-kicker">Support center</div><h2>Questions, answered clearly.</h2></div><div className="search-box"><Search size={17} /><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search support questions" aria-label="Search support questions" /></div></div><div className="faq-list">{filteredFaqs.map(([question,answer], index) => <article key={question} className={openFaq===index ? 'faq-item is-open':'faq-item'}><button onClick={()=>setOpenFaq(openFaq===index?-1:index)}><span>{question}</span>{openFaq===index?<X size={17}/>:<ChevronDown size={17}/>}</button>{openFaq===index&&<p>{answer}</p>}</article>)}</div></section>
+
+      <section className="feedback-section"><div className="section feedback-grid"><div><div className="section-kicker">Your feedback matters</div><h2>Help us improve BentaBoss.</h2><p className="section-lead">Found a bug, have a suggestion, or see a way to make the system more useful? Let us know.</p><div className="contact-links"><a href={`mailto:${config.email}`}><MessageCircle size={16}/> {config.email}</a><a href={config.messenger} target="_blank" rel="noreferrer"><MessageCircle size={16}/> Message on Facebook</a></div></div><form className="feedback-form" action={`mailto:${config.email}`} method="post" encType="text/plain"><div className="form-row"><label>Name<input name="name" required /></label><label>Email<input name="email" type="email" required /></label></div><div className="form-row"><label>Category<select name="category" defaultValue="Bug Report"><option>Bug Report</option><option>Feature Request</option><option>Question</option><option>Feedback</option><option>Other</option></select></label><label>BentaBoss version<input name="version" placeholder={config.version} /></label></div><label>Message<textarea name="message" rows="4" required /></label><p className="form-note">This form opens your email client. No fake submission status is shown.</p><button className="button" type="submit">Send feedback <ArrowRight size={16}/></button></form></div></section>
+
+      <section className="about-section"><div className="section about-grid"><div><div className="section-kicker">About BentaLab PH</div><h2>Local context. Practical ambition.</h2></div><div><p className="section-lead">BentaLab Business Solutions creates smart and practical business tools that help MSMEs manage, grow, and operate better.</p><p>“Benta” represents sales, business, livelihood, and entrepreneurship. “Lab” represents innovation, testing, creation, and continuous improvement. Together, BentaLab PH represents a Filipino-focused approach to practical business technology and local MSME workflows.</p></div></div></section>
+    </main>
+
+    <footer className="footer"><div className="footer-main"><Logo compact /><p>{config.tagline}</p><div className="footer-actions"><Button href={config.downloadUrl} external>Download BentaBoss</Button><a href={config.facebook} target="_blank" rel="noreferrer"><ExternalLink size={15}/> Facebook</a></div></div><div className="footer-bottom"><span>© 2026 {config.company}. All rights reserved.</span><span>BentaBoss Beta / Pre-Release</span><span><a href={`mailto:${config.email}`}>Support</a> · <a href="#home">Privacy</a> · <a href="#home">Terms</a></span></div></footer>
+  </div>
 }
+
+export default App
