@@ -67,7 +67,7 @@ function App() {
     <main>
       <section className="hero section" id="home">
         <div className="hero-copy"><div className="eyebrow"><span className="live-dot" /> BentaBoss — official release now available</div>
-          <h1>Smart business tools for <em>growing MSMEs.</em></h1>
+          <h1>Smart business tools for <em>growing Printing &  Crafting Businesses.</em></h1>
           <p className="lead">Meet BentaBoss — an integrated POS and accounting solution designed to help businesses manage sales, inventory, customer balances, expenses, reports, and daily operations with more confidence and control.</p>
           <div className="hero-actions"><Button href={config.downloadUrl} external><Download size={17} /> Download BentaBoss</Button><Button href="#features" secondary>Explore features</Button></div>
           <p className="micro-note">Windows desktop application · {config.version} · Official release</p>
