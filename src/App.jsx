@@ -26,7 +26,7 @@ const updates = [
 const faqs = [
   ['What is BentaBoss?', 'BentaBoss is a Windows desktop application that brings POS, sales, inventory, customer balances, expenses, accounting records, and reports into one practical system.'],
   ['Who is BentaBoss for?', 'It is designed for printing businesses and crafters who need a clearer way to manage sales, inventory, customer balances, expenses, and business records.'],
-  ['Is BentaBoss free?', `BentaBoss has a ${config.pricing.activation} lifetime activation offer for one device.`],
+  ['How long is the trial?', `You can try BentaBoss free for ${config.trialDays} days. After the trial, decide if it is right for your business and message the BentaLab PH office Facebook page if you would like to continue. You can then ask about activation and next steps.`],
   ['Is BentaBoss ready to use?', 'Yes. The official release is available for real business use, with ongoing improvements informed by customer feedback.'],
   ['Why does Windows show Unknown Publisher?', 'The installer is not yet code-signed with a paid publisher certificate. If you received it from an official BentaLab PH source, choose More info → Run anyway.'],
   ['How do I report a bug?', 'Use the feedback form below or email the BentaLab PH team with your BentaBoss version, what happened, and steps to reproduce the issue.'],
@@ -65,6 +65,7 @@ function App() {
     </header>
 
     <main>
+      <section className="release-section trial-section" id="trial"><div className="section release-grid"><div><div className="release-badge">TRY BENTABOSS</div><h2>Take 7 days to see if it fits your business.</h2></div><div><p>Start with a free {config.trialDays}-day trial and explore BentaBoss in your everyday workflow. There is no need to decide immediately.</p><p>After the trial, if you would like to continue using BentaBoss, message us through the <a className="email-link" href={config.messenger} target="_blank" rel="noreferrer">BentaLab PH office Facebook page <MessageCircle size={15} /></a> so we can help with activation and next steps.</p></div></div></section>
       <section className="hero section" id="home">
         <div className="hero-copy"><div className="eyebrow"><span className="live-dot" /> BentaBoss — official release now available</div>
           <h1>Smart business tools for <em>Printing Businesses &amp; Crafters.</em></h1>
